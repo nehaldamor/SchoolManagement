@@ -62,4 +62,6 @@ model Section{
   academic_years Academic_years @relation(fields:[academic_year_id],references:[id])
   createdAt DateTime @default(now())
   updatedAt DateTime
+
+  @@unique([name, class_id, academic_year_id])
 }
