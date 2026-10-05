@@ -12,7 +12,7 @@ export class AuthService {
     }
     async login(loginData: UserLoginDto) {
         try {
-            const user = await this.authRepository.findUser(loginData.email);
+            const user = await this.authRepository.findUser(loginData.email.toLowerCase());
             if (!user) {
                 throw new NotFoundException("user not found")
             }

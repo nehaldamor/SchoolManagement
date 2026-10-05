@@ -34,3 +34,18 @@ model User {
   passwordHash String
   createdAt    DateTime @default(now())
 }
+
+model Academic_years{
+  id          String @id @default(uuid()) @db.Uuid
+  name        String
+  starting_date  DateTime
+  ending_date    DateTime
+  curr_year  Boolean    @default(false)
+}
+
+model Class{
+  id String @id @default(uuid()) @db.Uuid
+  name String
+  createdAt DateTime @default(now())
+  updatedAt DateTime
+}
