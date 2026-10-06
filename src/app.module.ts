@@ -7,9 +7,10 @@ import { AcademicyearModule } from './academicyear/academicyear.module';
 import { ClassModule } from './class/class.module';
 import { SectionModule } from './section/section.module';
 import { SubjectModule } from './subject/subject.module';
+import { ClasssubjectModule } from './classsubject/classsubject.module';
 
 @Module({
-  imports: [PrismaModule, AuthModule, AcademicyearModule, ClassModule, SectionModule, SubjectModule],
+  imports: [PrismaModule, AuthModule, AcademicyearModule, ClassModule, SectionModule, SubjectModule, ClasssubjectModule],
   controllers: [AppController],
   providers: [AppService],
 })
