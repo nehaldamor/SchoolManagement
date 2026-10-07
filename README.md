@@ -57,6 +57,27 @@ $ npm run test:e2e
 $ npm run test:cov
 ```
 
+## User invitations
+
+Apply the latest Prisma migration before using the invitation endpoints:
+
+```bash
+npx prisma migrate deploy
+npx prisma generate
+```
+
+An authenticated admin can create invitations for `TEACHER`, `STUDENT`, and
+`WORKER` with `POST /admin/invitations`, providing `name`, `email`, and `role`.
+Teacher invitations additionally require `employee_num`, `phone`, and
+`joinind_date` (an ISO 8601 date). Email delivery is not enabled yet: the
+generated URL is logged by the API and included in the response for testing.
+Set `FRONTEND_URL` to the frontend origin; it defaults to
+`http://localhost:5173`.
+
+The invitee chooses a password and submits the `token` from the URL and
+`password` to the public endpoint `POST /admin/invitations/accept`. Invitation
+tokens are stored hashed, expire after 72 hours, and can only be accepted once.
+
 ## Deployment
 
 When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.

@@ -8,9 +8,10 @@ import { ClassModule } from './class/class.module';
 import { SectionModule } from './section/section.module';
 import { SubjectModule } from './subject/subject.module';
 import { ClasssubjectModule } from './classsubject/classsubject.module';
+import { AdminModule } from './admin/admin.module';
 
 @Module({
-  imports: [PrismaModule, AuthModule, AcademicyearModule, ClassModule, SectionModule, SubjectModule, ClasssubjectModule],
+  imports: [PrismaModule, AuthModule, AcademicyearModule, ClassModule, SectionModule, SubjectModule, ClasssubjectModule, AdminModule],
   controllers: [AppController],
   providers: [AppService],
 })

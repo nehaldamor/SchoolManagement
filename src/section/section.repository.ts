@@ -23,7 +23,7 @@ export class SectionRepository {
     });
   }
 
-  async createSection(createSectionData: CreateSectionDto) {
+  async createSection(createSectionData: CreateSectionDto) { 
     return this.prisma.section.create({
       data: {
         name: createSectionData.name,
