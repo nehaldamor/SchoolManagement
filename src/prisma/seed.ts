@@ -1,6 +1,7 @@
 import "dotenv/config"; 
 import { PrismaClient } from '../generated/prisma/client.js'; 
 import { PrismaPg } from "@prisma/adapter-pg"; 
+import { Roles } from '../generated/prisma/enums.js';
 import bcrypt from "bcrypt"; 
 
 const adapter = new PrismaPg({ 
@@ -10,21 +11,28 @@ const adapter = new PrismaPg({
 const prisma = new PrismaClient({ adapter }); 
 
 async function main() {
+  for (const name of Object.values(Roles)) {
+    const existingRole = await prisma.role.findFirst({ where: { name } });
+    if (!existingRole) {
+      await prisma.role.create({ data: { name } });
+    }
+  }
+
   const password = "123456";
   const hashedPassword = await bcrypt.hash(password, 10); 
-
-  const adminData = {
-    email: "admin@example.com",
-    passwordHash: hashedPassword,
-    role: "688f1791-c3d8-4672-9ba8-4815acef2905"
-  };
+  const adminRole = await prisma.role.findFirst({
+    where: { name: Roles.ADMIN },
+  });
+  if (!adminRole) {
+    throw new Error('Admin role was not created');
+  }
   await prisma.user.upsert({ 
-    where: { email: adminData.email }, 
+    where: { email: "admin@example.com" }, 
     update: {}, 
     create: { 
-      email: adminData.email, 
-      passwordHash: adminData.passwordHash, 
-      role: { connect: { id: adminData.role } }, 
+      email: "admin@example.com", 
+      passwordHash: hashedPassword, 
+      role: { connect: { id: adminRole.id } }, 
     }, 
   }); 
 

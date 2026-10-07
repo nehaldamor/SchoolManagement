@@ -31,7 +31,7 @@ export class SubjectService {
     }
     return subject;
   }
-
+  
   async updateSubject(id: string, updateData: UpdateSubjectDto) {
     await this.getSubject(id);
     if (Object.values(updateData).every((value) => value === undefined)) {
@@ -43,7 +43,7 @@ export class SubjectService {
     );
     return { message: 'Subject updated successfully', subject };
   }
-
+                                                                            
   async deleteSubject(id: string) {
     await this.getSubject(id);
     await this.subjectRepository.deleteSubject(id);

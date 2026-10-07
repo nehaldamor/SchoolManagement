@@ -30,9 +30,11 @@ model User {
   id           String   @id @default(uuid()) @db.Uuid
   roleId       String   @db.Uuid
   role         Role     @relation(fields: [roleId], references: [id])
+  name         String?
   email        String   @unique
   passwordHash String
   createdAt    DateTime @default(now())
+  teacher Teacher[]
 }
 
 model Academic_years{
@@ -88,4 +90,39 @@ model ClassSubject {
   @@unique([class_id, subject_id])
   @@index([class_id])
   @@index([subject_id])
+}
+
+enum Status{
+  ACTIVE
+  INVITED
+  INACTIVE
+}
+model Teacher{
+  id String @id @default(uuid()) @db.Uuid
+  name String
+  employee_num Int
+  user_id String @db.Uuid
+  user User @relation(fields:[user_id],references:[id])
+  email String @unique
+  phone Int
+  joinind_date DateTime
+  Status  Status @default(INVITED)
+  created_at DateTime @default(now())
+  updated_at DateTime
+
+}
+
+model UserInvitation {
+  id           String   @id @default(uuid()) @db.Uuid
+  email        String   @unique
+  name         String
+  role         Roles
+  employee_num Int?
+  phone        Int?
+  joinind_date DateTime?
+  token_hash   String   @unique
+  expires_at   DateTime
+  accepted_at  DateTime?
+  created_at   DateTime @default(now())
+  updated_at   DateTime @updatedAt
 }
